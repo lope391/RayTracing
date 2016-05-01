@@ -115,6 +115,13 @@ public class Vector4 {
         double z = v1.vector[2] + v2.vector[2];
         return new Vector4(x, y, z);
     }
+
+    public static Vector4 substract(Vector4 v1, Vector4 v2) {
+        double x = v1.vector[0] - v2.vector[0];
+        double y = v1.vector[1] - v2.vector[1];
+        double z = v1.vector[2] - v2.vector[2];
+        return new Vector4(x, y, z);
+    }
     
     /**
      * Multiplies a vector times a scalar and returns the result

@@ -51,8 +51,8 @@ public class Main extends JPanel {
         double Ks = 0.5;          // specular
         int n = 12;
         Colour color = new Colour(1, 0, 0);     // object's color
-        double Ko = 1;          // Weight of this object's color
-        double Kr = 0;          // Weight of the reflected color
+        double Ko = 0.8;          // Weight of this object's color
+        double Kr = 0.2;          // Weight of the reflected color
         double Kt = 0;          // Weight of the refracted color
         Material material1 = new Material(Ka, Kd, Ks, n, color, Ko, Kr, Kt);
         
@@ -65,8 +65,8 @@ public class Main extends JPanel {
         Ks = 0.5;          // specular
         n = 12;
         color = new Colour(1, 1, 0);     // object's color
-        Ko = 1;          // Weight of this object's color
-        Kr = 0;          // Weight of the reflected color
+        Ko = 0.7;          // Weight of this object's color
+        Kr = 0.3;          // Weight of the reflected color
         Kt = 0;          // Weight of the refracted color
         Material material2 = new Material(Ka, Kd, Ks, n, color, Ko, Kr, Kt);
         

@@ -7,6 +7,7 @@ package Scene;
 
 import java.util.ArrayList;
 import Math.Sphere;
+import Math.Triangle;
 import Math.Ray;
 import Math.Solutions;
 import Math.Vector4;
@@ -27,9 +28,13 @@ public class Scene {
     // Several Spheres
     static ArrayList<Sphere> spheres = new ArrayList<>();
 
+    //Several Triangles
+    static ArrayList<Triangle> triangles = new ArrayList<>();
+
     // Bacground color
     //static final Colour BACKGROUNDCOLOR = new Colour(0.7, 0.7, 0.9);
-    static final Colour BACKGROUNDCOLOR = new Colour(0.05, 0.05, 0.05);
+
+    static final Colour BACKGROUNDCOLOR = new Colour(0.1, 0.1, 0.1);
     //static final Colour BACKGROUNDCOLOR = new Colour(.1, 0.74 , 1);
     
     /**
@@ -65,44 +70,46 @@ public class Scene {
     public static Colour intersectRay(Ray ray) {
 
         double minT = Double.MAX_VALUE;
-        Sphere closest = null;
+        Sphere closestS = null;
+        Triangle closestT = null;
 
         // Chose the closest surface
         for(Sphere sphere: spheres) {
             Solutions s = Sphere.intersect(sphere, ray);
 
             if(s.getNumSolutions() > 0) {
+
                 // ignore solutins with a t value smaller than 0,
                 // because they are behind the origin of the ray
-
                 if(s.getT1() > 0.01) {
-                    // Is this surface closer to the origin of the ray?
 
+                    // Is this surface closer to the origin of the ray?
                     if(s.getT1() < minT) {
                         minT = s.getT1();
-                        closest = sphere;
+                        closestS = sphere;
                     }
                 }
             }
         }
 
-        if(closest != null) {
+        if(closestS != null) {
             Colour acum  = new Colour(0, 0, 0);
-            double Ko = closest.getMaterial().Ko;
-            double Kr = closest.getMaterial().Kr;
-            double Kt = closest.getMaterial().Kt;
+            double Ko = closestS.getMaterial().Ko;
+            double Kr = closestS.getMaterial().Kr;
+            double Kt = closestS.getMaterial().Kt;
 
             // Compute this oject's color
             if(Ko != 0) {
-                Colour thisColor = Colour.multiply(closest.callShader(ray, minT),Ko);
+                Colour thisColor = Colour.multiply(closestS.callShader(ray, minT),Ko);
                 acum = Colour.add(acum, thisColor);
             }
 
             // Compute the reflection
             if(Kr != 0) {
+
                 // Find the normal at the solution
                 Point p = ray.evaluate(minT);
-                Vector4 normal = closest.computeNormal(p);
+                Vector4 normal = closestS.computeNormal(p);
 
                 // create the reflection ray (reflectedRay)
                 Vector4 direction = Vector4.reflection(ray.getU(), normal);
@@ -121,6 +128,11 @@ public class Scene {
 
             return acum;
         }
+
+        for(Triangle triangle: triangles){
+
+        }
+
         return BACKGROUNDCOLOR;
     }
 }
