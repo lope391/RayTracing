@@ -33,9 +33,9 @@ public class Triangle {
         return Shader.computeColor(point,normal,material);
     }
 
-    public static Solutions intersect(Triangle trianle, Ray ray){
-
-    }
+//    public static Solutions intersect(Triangle trianle, Ray ray){
+//
+//    }
 
 
 }
